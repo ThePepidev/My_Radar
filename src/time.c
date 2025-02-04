@@ -26,6 +26,7 @@ static char *str_cat(char *str1, char *str2)
 
     my_strcpy(result, str1);
     my_strcat(result, str2);
+    free(str2);
     return result;
 }
 
@@ -33,15 +34,15 @@ static char *cast_to_str(int nb)
 {
     int temp;
     float nb_copy = (float)nb;
-    char *str;
     int i = 0;
+    char *str;
     int len_nb = len_nbr(&nb_copy);
 
     if (nb == 0)
         return "00";
     if (nb == 33)
         return "33";
-    str = malloc(len_nb + 1);
+    str = malloc(sizeof(char) * (len_nb + 1));
     for (; i < len_nb; i++) {
         temp = (int)nb_copy;
         nb_copy = (nb_copy - temp) * 10;
@@ -53,17 +54,30 @@ static char *cast_to_str(int nb)
     return str;
 }
 
+static void free_strings(char *str, char *hours, char *min, char *sec)
+{
+    if (my_strcmp(hours, "00") != 0 && my_strcmp(hours, "33") != 0)
+        free(hours);
+    if (my_strcmp(min, "00") != 0 && my_strcmp(min, "33") != 0)
+        free(min);
+    if (my_strcmp(sec, "00") != 0 && my_strcmp(sec, "33") != 0)
+        free(sec);
+    free(str);
+}
+
 static void display_clock(int secondes,
     int minutes, int heures, radar_t *radar)
 {
     char *sec = cast_to_str(secondes);
     char *min = cast_to_str(minutes);
     char *hours = cast_to_str(heures);
-    char *str = str_cat(hours, ":");
+    char *str = malloc(sizeof(char) * 9);
 
-    str = str_cat(str, min);
-    str = str_cat(str, ":");
-    str = str_cat(str, sec);
+    my_strcpy(str, hours);
+    my_strcat(str, ":");
+    my_strcat(str, min);
+    my_strcat(str, ":");
+    my_strcat(str, sec);
     if (!radar->time_clock)
         return;
     sfText_setString(radar->time_clock, str);
@@ -71,6 +85,7 @@ static void display_clock(int secondes,
     sfText_setColor(radar->time_clock, sfBlack);
     sfText_setCharacterSize(radar->time_clock, 95);
     sfText_setPosition(radar->time_clock, (sfVector2f){1320, 50});
+    free_strings(str, hours, min, sec);
 }
 
 void clock_draw(radar_t *radar)

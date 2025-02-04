@@ -74,6 +74,8 @@ static void free_all(plane_t *planes,
     tower_t *towers, radar_t *radar, sfRenderWindow *window)
 {
     free_lists(towers, planes);
+    sfText_destroy(radar->time_clock);
+    sfFont_destroy(radar->pixel_font);
     sfClock_destroy(radar->clock);
     sfClock_destroy(radar->P_clock);
     sfSprite_destroy(radar->background);
