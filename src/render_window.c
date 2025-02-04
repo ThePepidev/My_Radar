@@ -30,6 +30,7 @@ static void draw_all(sfRenderWindow *window,
 
     sfRenderWindow_clear(window, sfBlack);
     sfRenderWindow_drawSprite(window, radar.background, NULL);
+    sfRenderWindow_drawText(window, radar.time_clock, NULL);
     while (towers) {
         if (radar.disp_sprite)
             sfRenderWindow_drawSprite(window, towers->Tsprite, NULL);
@@ -44,7 +45,6 @@ static void draw_all(sfRenderWindow *window,
         }
         current_plane = current_plane->next;
     }
-    sfRenderWindow_drawText(window, radar.time_clock, NULL);
     sfRenderWindow_display(window);
 }
 
