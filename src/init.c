@@ -30,6 +30,9 @@ radar_t *init_radar_struct(void)
     "templates/map.jpg");
     temp->clock = sfClock_create();
     temp->P_clock = sfClock_create();
+    temp->time_clock = sfText_create();
+    temp->pixel_font =
+    sfFont_createFromFile("templates/enter-the-gungeon-small.ttf");
     if (!temp->clock || !temp->back_text ||
     !temp->background || !temp->P_clock)
         return NULL;

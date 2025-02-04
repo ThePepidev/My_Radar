@@ -44,6 +44,7 @@ static void draw_all(sfRenderWindow *window,
         }
         current_plane = current_plane->next;
     }
+    sfRenderWindow_drawText(window, radar.time_clock, NULL);
     sfRenderWindow_display(window);
 }
 
@@ -94,6 +95,7 @@ int render_window(char **av)
     while (sfRenderWindow_isOpen(window)) {
         handle_events(window, radar);
         update_planes(*radar, planes);
+        clock_draw(radar);
         check_ending(planes);
         draw_all(window, towers, *radar, planes);
     }

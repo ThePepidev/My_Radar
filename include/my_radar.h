@@ -49,6 +49,8 @@ typedef struct radar_s {
     sfTexture *back_text;
     sfClock *clock;
     sfClock *P_clock;
+    sfFont *pixel_font;
+    sfText *time_clock;
 } radar_t;
 
 int render_window(char **av);
@@ -64,5 +66,6 @@ radar_t *init_radar_struct(void);
 void draw_planes(radar_t radar, plane_t *planes, sfRenderWindow *window);
 void update_planes(radar_t radar, plane_t *planes);
 int check_ending(plane_t *planes);
+void clock_draw(radar_t *radar);
 
-#endif /* !MY_RADAR_H */
+#endif /* MY_RADAR_H */
