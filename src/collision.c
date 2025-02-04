@@ -51,11 +51,12 @@ static int is_collision(plane_t *current, plane_t *other)
     if ((current->current.x - other->current.x) > sqrt(200) ||
         (current->current.y - other->current.y) > sqrt(200))
         return 0;
-    if (hit_current.right >= hit_other.left ||
-    hit_current.left <= hit_other.right ||
-    hit_current.top >= hit_other.bot ||
-    hit_current.bot <= hit_other.top)
+    if (hit_current.right >= hit_other.left &&
+        hit_current.left <= hit_other.right &&
+        hit_current.bot >= hit_other.top &&
+        hit_current.top <= hit_other.bot) {
         return 1;
+    }
     return 0;
 }
 
