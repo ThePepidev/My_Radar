@@ -7,6 +7,7 @@
 
 #ifndef MY_RADAR_H
     #define MY_RADAR_H
+    #define M_PI 3.14159265358979323846
 
     #include <SFML/Graphics.h>
     #include <SFML/System.h>
@@ -67,5 +68,6 @@ void draw_planes(radar_t radar, plane_t *planes, sfRenderWindow *window);
 void update_planes(radar_t radar, plane_t *planes);
 int check_ending(plane_t *planes);
 void clock_draw(radar_t *radar);
+void rotate_plane(plane_t *planes);
 
 #endif /* MY_RADAR_H */

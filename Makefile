@@ -12,7 +12,8 @@ SRC 	=	main.c 							\
 			src/towerinfo.c 				\
 			src/plane.c 					\
 			src/plane_info.c 				\
-			src/time.c
+			src/time.c						\
+			src/angle.c
 
 LIB 	= 	-L./lib/ -lmy -lm
 

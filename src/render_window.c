@@ -30,7 +30,6 @@ static void draw_all(sfRenderWindow *window,
 
     sfRenderWindow_clear(window, sfBlack);
     sfRenderWindow_drawSprite(window, radar.background, NULL);
-    sfRenderWindow_drawText(window, radar.time_clock, NULL);
     while (towers) {
         if (radar.disp_sprite)
             sfRenderWindow_drawSprite(window, towers->Tsprite, NULL);
@@ -45,6 +44,7 @@ static void draw_all(sfRenderWindow *window,
         }
         current_plane = current_plane->next;
     }
+    sfRenderWindow_drawText(window, radar.time_clock, NULL);
     sfRenderWindow_display(window);
 }
 
@@ -70,7 +70,8 @@ static void free_lists(tower_t *towers, plane_t *planes)
     }
 }
 
-static void free_all(plane_t *planes, tower_t *towers, radar_t *radar)
+static void free_all(plane_t *planes,
+    tower_t *towers, radar_t *radar, sfRenderWindow *window)
 {
     free_lists(towers, planes);
     sfClock_destroy(radar->clock);
@@ -78,6 +79,7 @@ static void free_all(plane_t *planes, tower_t *towers, radar_t *radar)
     sfSprite_destroy(radar->background);
     sfTexture_destroy(radar->back_text);
     free(radar);
+    sfRenderWindow_destroy(window);
 }
 
 int render_window(char **av)
@@ -95,11 +97,11 @@ int render_window(char **av)
     while (sfRenderWindow_isOpen(window)) {
         handle_events(window, radar);
         update_planes(*radar, planes);
+        rotate_plane(planes);
         clock_draw(radar);
         check_ending(planes);
         draw_all(window, towers, *radar, planes);
     }
-    free_all(planes, towers, radar);
-    sfRenderWindow_destroy(window);
+    free_all(planes, towers, radar, window);
     return 0;
 }
