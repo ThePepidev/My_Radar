@@ -30,11 +30,22 @@ static char *str_cat(char *str1, char *str2)
     return result;
 }
 
-static char *cast_to_str(int nb)
+static void copy_nbr(char *str, float nb_copy, int len_nb)
 {
     int temp;
-    float nb_copy = (float)nb;
     int i = 0;
+
+    for (; i < len_nb; i++) {
+        temp = (int)nb_copy;
+        nb_copy = (nb_copy - temp) * 10;
+        str[i] = (nb_copy + 48);
+    }
+    str[i] = '\0';
+}
+
+static char *cast_to_str(int nb)
+{
+    float nb_copy = (float)nb;
     char *str;
     int len_nb = len_nbr(&nb_copy);
 
@@ -43,12 +54,9 @@ static char *cast_to_str(int nb)
     if (nb == 33)
         return "33";
     str = malloc(sizeof(char) * (len_nb + 1));
-    for (; i < len_nb; i++) {
-        temp = (int)nb_copy;
-        nb_copy = (nb_copy - temp) * 10;
-        str[i] = (nb_copy + 48);
-    }
-    str[i] = '\0';
+    if (!str)
+        return NULL;
+    copy_nbr(str, nb_copy, len_nb);
     if (nb < 10)
         return str_cat("0", str);
     return str;
@@ -73,6 +81,8 @@ static void display_clock(int secondes,
     char *hours = cast_to_str(heures);
     char *str = malloc(sizeof(char) * 9);
 
+    if (!str || !hours || !sec || !min)
+        return;
     my_strcpy(str, hours);
     my_strcat(str, ":");
     my_strcat(str, min);
