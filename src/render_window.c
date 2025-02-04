@@ -93,7 +93,7 @@ int render_window(char **av)
     plane_t *planes = create_all_planes(av);
     radar_t *radar = init_radar_struct();
 
-    if (!window || !towers || !planes || !radar)
+    if (!window || !planes || !radar)
         return 84;
     sfRenderWindow_setFramerateLimit(window, 60);
     while (sfRenderWindow_isOpen(window) && planes) {
