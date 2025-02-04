@@ -33,8 +33,11 @@ void getplane_info(plane_t **new_node, int count, char *filepath)
     char *line = NULL;
     int current = 1;
     size_t len = 0;
-    ssize_t nread = getline(&line, &len, file);
+    ssize_t nread;
 
+    if (!file)
+        return;
+    nread = getline(&line, &len, file);
     for (; nread != -1; nread = getline(&line, &len, file)) {
         if (line[0] != 'A')
             continue;
@@ -44,6 +47,7 @@ void getplane_info(plane_t **new_node, int count, char *filepath)
     }
     attribut_info(line, new_node);
     free(line);
+    fclose(file);
 }
 
 int getplane_nb(char *filepath)

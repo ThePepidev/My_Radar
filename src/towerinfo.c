@@ -141,6 +141,7 @@ int get_towers_nb(char *filepath)
         }
         nread = getline(&line, &len, file);
     }
+    fclose(file);
     free(line);
     return count;
 }
