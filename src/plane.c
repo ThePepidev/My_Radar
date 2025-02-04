@@ -17,50 +17,17 @@ void draw_planes(radar_t radar, plane_t *planes, sfRenderWindow *window)
         sfRenderWindow_drawRectangleShape(window, planes->hitbox, NULL);
 }
 
-int check_ending(plane_t *planes)
+void update_planes(radar_t *radar, tower_t *towers, plane_t *planes)
 {
     plane_t *current = planes;
+    float delta_time = sfTime_asSeconds(sfClock_restart(radar->P_clock));
 
-    while (current) {
-        if ((current->current.x - current->final.x) <= 1.0f &&
-        (current->current.y - current->final.y) <= 1.0f)
-            current->end = true;
-        current = current->next;
-    }
-    return 0;
-}
-
-static void update_length(sfVector2f *direction, float *length)
-{
-    *length = sqrt(direction->x
-    * direction->x + direction->y * direction->y);
-    if (*length != 0) {
-        direction->x /= *length;
-        direction->y /= *length;
-    }
-}
-
-void update_planes(radar_t radar, plane_t *planes)
-{
-    sfVector2f direction;
-    float length;
-    float delta_time = sfTime_asSeconds(sfClock_restart(radar.P_clock));
-    sfVector2f move;
-    float elapsed_time = sfTime_asSeconds(sfClock_getElapsedTime(radar.clock));
-
-    for (plane_t *current = planes; current; current = current->next) {
-        if (elapsed_time >= current->delay) {
-            direction = (sfVector2f){current->final.x -
-            current->spawn.x, current->final.y - current->spawn.y};
-            update_length(&direction, &length);
-            move = (sfVector2f){direction.x * current->speed * delta_time,
-            direction.y * current->speed * delta_time};
-            sfSprite_move(current->Psprite, move);
-            current->current.x += move.x;
-            current->current.y += move.y;
-            sfRectangleShape_setPosition(current->hitbox,
-            (sfVector2f){current->current.x - 1, current->current.y - 4});
-        }
+    for (; current; current = current->next) {
+        if (current->end)
+            continue;
+        update_position(*radar, current, delta_time);
+        rotate_plane(current);
+        collision(towers, radar, current);
     }
 }
 

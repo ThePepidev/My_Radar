@@ -16,7 +16,9 @@ SRC 	=	main.c 							\
 			src/angle.c 					\
 			src/verif_assets.c 				\
 			src/check_file.c				\
-			src/check_env.c
+			src/check_env.c 				\
+			src/collision.c 				\
+			src/position.c
 
 LIB 	= 	-L./lib/ -lmy -lm
 

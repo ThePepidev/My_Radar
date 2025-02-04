@@ -98,8 +98,7 @@ int render_window(char **av)
     sfRenderWindow_setFramerateLimit(window, 60);
     while (sfRenderWindow_isOpen(window)) {
         handle_events(window, radar);
-        update_planes(*radar, planes);
-        rotate_plane(planes);
+        update_planes(radar, towers, planes);
         clock_draw(radar);
         check_ending(planes);
         draw_all(window, towers, *radar, planes);

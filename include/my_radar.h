@@ -29,6 +29,7 @@ typedef struct plane_s {
     sfVector2f spawn;
     sfVector2f final;
     sfSprite *Psprite;
+    float angle;
     bool end;
     sfTexture *Ptexture;
     struct plane_s *next;
@@ -54,6 +55,13 @@ typedef struct radar_s {
     sfText *time_clock;
 } radar_t;
 
+typedef struct hitbox_s {
+    float top;
+    float bot;
+    float left;
+    float right;
+} hitbox_t;
+
 int render_window(char **av);
 tower_t *create_all_towers(char **av);
 sfSprite *create_sprite_from_file(sfTexture **temp, char *filepath);
@@ -65,12 +73,14 @@ void getplane_info(plane_t **new_node, int count, char *filepath);
 plane_t *create_all_planes(char **args);
 radar_t *init_radar_struct(void);
 void draw_planes(radar_t radar, plane_t *planes, sfRenderWindow *window);
-void update_planes(radar_t radar, plane_t *planes);
+void update_position(radar_t radar, plane_t *current, float delta_time);
 int check_ending(plane_t *planes);
 void clock_draw(radar_t *radar);
 void rotate_plane(plane_t *planes);
 int verif_assets(void);
 int check_file(char **av);
 int is_tty(char **env);
+void collision(tower_t *towers, radar_t *radar, plane_t *current);
+void update_planes(radar_t *radar, tower_t *towers, plane_t *planes);
 
 #endif /* MY_RADAR_H */
