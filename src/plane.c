@@ -17,6 +17,38 @@ void draw_planes(radar_t radar, plane_t *planes, sfRenderWindow *window)
         sfRenderWindow_drawRectangleShape(window, planes->hitbox, NULL);
 }
 
+void kill_plane(plane_t **planes)
+{
+    plane_t *current = *planes;
+    plane_t *temp;
+
+    // Free planes at the beginning of the list
+    while (current && current->end) {
+        temp = current;
+        current = current->next;
+        sfSprite_destroy(temp->Psprite);
+        sfTexture_destroy(temp->Ptexture);
+        sfRectangleShape_destroy(temp->hitbox);
+        free(temp);
+    }
+
+    *planes = current; // Update the head of the list
+
+    // Free planes in the middle or end of the list
+    while (current && current->next) {
+        if (current->next->end) {
+            temp = current->next;
+            current->next = current->next->next;
+            sfSprite_destroy(temp->Psprite);
+            sfTexture_destroy(temp->Ptexture);
+            sfRectangleShape_destroy(temp->hitbox);
+            free(temp);
+        } else {
+            current = current->next;
+        }
+    }
+}
+
 void update_planes(radar_t *radar, tower_t *towers, plane_t *planes)
 {
     plane_t *current = planes;

@@ -96,12 +96,13 @@ int render_window(char **av)
     if (!window || !towers || !planes || !radar)
         return 84;
     sfRenderWindow_setFramerateLimit(window, 60);
-    while (sfRenderWindow_isOpen(window)) {
+    while (sfRenderWindow_isOpen(window) && planes) {
         handle_events(window, radar);
         update_planes(radar, towers, planes);
         clock_draw(radar);
         check_ending(planes);
         draw_all(window, towers, *radar, planes);
+        kill_plane(&planes);
     }
     free_all(planes, towers, radar, window);
     return 0;

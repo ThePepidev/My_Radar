@@ -82,5 +82,6 @@ int check_file(char **av);
 int is_tty(char **env);
 void collision(tower_t *towers, radar_t *radar, plane_t *current);
 void update_planes(radar_t *radar, tower_t *towers, plane_t *planes);
+void kill_plane(plane_t **planes);
 
 #endif /* MY_RADAR_H */
