@@ -47,6 +47,9 @@ typedef struct tower_s {
 typedef struct radar_s {
     bool disp_hitbox;
     bool disp_sprite;
+    bool pause;
+    float elapsed;
+    sfTime pausedTime;
     sfSprite *background;
     sfTexture *back_text;
     sfClock *clock;
@@ -83,5 +86,6 @@ int is_tty(char **env);
 void collision(tower_t *towers, radar_t *radar, plane_t *current);
 void update_planes(radar_t *radar, tower_t *towers, plane_t *planes);
 void kill_plane(plane_t **planes);
+void update_timer(radar_t *radar, sfTime *pausedTime);
 
 #endif /* MY_RADAR_H */

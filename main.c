@@ -12,15 +12,13 @@ static void print_help(void)
 {
     my_putstr("Air traffic simulation panel\n\n");
     my_putstr("USAGE\n");
-    my_putstr("    ./my_radar [OPTIONS]\n\n");
+    my_putstr("    ./my_radar [OPTIONS]\n");
+    my_putstr("    path_to_script The path to the script file.\n\n");
     my_putstr("OPTIONS\n");
     my_putstr("    -h    print the usage and quit.\n\n");
     my_putstr("USER INTERACTIONS\n");
-    my_putstr("    LEFT_ARROW    switch to the previous tower.\n");
-    my_putstr("    RIGHT_ARROW    switch to the next tower.\n");
-    my_putstr("    UP_ARROW    increase the radar range.\n");
-    my_putstr("    DOWN_ARROW    decrease the radar range.\n");
-    my_putstr("    R    reset the radar range.\n");
+    my_putstr("    `L' key enable/disable hitboxes and areas.\n");
+    my_putstr("    `S' key enable/disable sprites\n");
     my_putstr("    SPACE    pause the simulation.\n");
     my_putstr("    ESCAPE    close the window.\n");
 }

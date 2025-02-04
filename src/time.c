@@ -100,8 +100,7 @@ static void display_clock(int secondes,
 
 void clock_draw(radar_t *radar)
 {
-    int total_secondes =
-    sfTime_asSeconds(sfClock_getElapsedTime(radar->clock));
+    int total_secondes = radar->elapsed;
     int secondes = 0;
     int minutes = 0;
     int heures = 0;

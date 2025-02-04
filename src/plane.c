@@ -54,9 +54,11 @@ void update_planes(radar_t *radar, tower_t *towers, plane_t *planes)
     for (; current; current = current->next) {
         if (current->end)
             continue;
-        update_position(*radar, current, delta_time);
-        rotate_plane(current);
-        collision(towers, radar, current);
+        if (!radar->pause) {
+            update_position(*radar, current, delta_time);
+            rotate_plane(current);
+            collision(towers, radar, current);
+        }
     }
 }
 

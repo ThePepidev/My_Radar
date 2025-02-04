@@ -20,7 +20,10 @@ static void handle_events(sfRenderWindow *window, radar_t *radar)
             radar->disp_hitbox = !radar->disp_hitbox;
         if (event.type == sfEvtKeyPressed && event.key.code == sfKeyS)
             radar->disp_sprite = !radar->disp_sprite;
+        if (event.type == sfEvtKeyPressed && event.key.code == sfKeySpace)
+            radar->pause = !radar->pause;
     }
+    update_timer(radar, &radar->pausedTime);
 }
 
 static void draw_all(sfRenderWindow *window,
@@ -39,8 +42,7 @@ static void draw_all(sfRenderWindow *window,
         towers = towers->next;
     }
     while (current_plane) {
-        if (sfTime_asSeconds(sfClock_getElapsedTime(radar.clock)) >=
-        current_plane->delay) {
+        if (radar.elapsed >= current_plane->delay) {
             draw_planes(radar, current_plane, window);
         }
         current_plane = current_plane->next;
@@ -88,7 +90,7 @@ int render_window(char **av)
 {
     sfVideoMode mode = {1920, 1080, 32};
     sfRenderWindow *window =
-        sfRenderWindow_create(mode, "My_Radar", sfClose, NULL);
+    sfRenderWindow_create(mode, "My_Radar", sfClose, NULL);
     tower_t *towers = create_all_towers(av);
     plane_t *planes = create_all_planes(av);
     radar_t *radar = init_radar_struct();

@@ -37,7 +37,7 @@ void update_position(radar_t radar, plane_t *current, float delta_time)
     sfVector2f direction;
     float length;
     sfVector2f move;
-    float elapsed_time = sfTime_asSeconds(sfClock_getElapsedTime(radar.clock));
+    float elapsed_time = radar.elapsed;
 
     if (elapsed_time >= current->delay) {
         direction = (sfVector2f){current->final.x -

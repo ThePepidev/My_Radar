@@ -79,7 +79,7 @@ static int check_collision(plane_t *current, tower_t *towers, float elapsed)
 
 void collision(tower_t *towers, radar_t *radar, plane_t *current)
 {
-    float elapsed = sfTime_asSeconds(sfClock_getElapsedTime(radar->clock));
+    float elapsed = radar->elapsed;
 
     if (elapsed < current->delay)
         return;
