@@ -21,6 +21,7 @@ static void attribut_info(char *line, plane_t **new_node)
     (*new_node)->final = (sfVector2f){temp_1, temp_2};
     (*new_node)->speed = my_getfloat(array[5]);
     (*new_node)->delay = my_getfloat(array[6]);
+    (*new_node)->end = false;
     for (int i = 0; array[i]; i++)
         free(array[i]);
     free(array);

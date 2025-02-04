@@ -126,7 +126,6 @@ plane_t *create_all_planes(char **args)
         check = add_node(&planes, count, args);
         if (check == 84)
             return NULL;
-        planes->end = false;
     }
     return planes;
 }
