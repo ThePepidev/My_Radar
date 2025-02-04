@@ -13,7 +13,10 @@ SRC 	=	main.c 							\
 			src/plane.c 					\
 			src/plane_info.c 				\
 			src/time.c						\
-			src/angle.c
+			src/angle.c 					\
+			src/verif_assets.c 				\
+			src/check_file.c				\
+			src/check_env.c
 
 LIB 	= 	-L./lib/ -lmy -lm
 

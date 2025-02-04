@@ -69,5 +69,8 @@ void update_planes(radar_t radar, plane_t *planes);
 int check_ending(plane_t *planes);
 void clock_draw(radar_t *radar);
 void rotate_plane(plane_t *planes);
+int verif_assets(void);
+int check_file(char **av);
+int is_tty(char **env);
 
 #endif /* MY_RADAR_H */

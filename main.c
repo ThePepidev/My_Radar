@@ -25,47 +25,17 @@ static void print_help(void)
     my_putstr("    ESCAPE    close the window.\n");
 }
 
-static long getfilesize(char *filepath)
-{
-    struct stat file_stat;
-
-    if (stat(filepath, &file_stat) != -1) {
-        return file_stat.st_size;
-    }
-    return -1;
-}
-
-static int check_file(char **av)
-{
-    int fd;
-    int fo;
-    long size = getfilesize(av[1]);
-    char *buffer;
-
-    if (size == -1 || !av[1])
-        return 84;
-    fd = open(av[1], O_RDONLY);
-    if (fd == -1)
-        return 84;
-    buffer = malloc(sizeof(char) * (size + 1));
-    if (!buffer)
-        return 84;
-    fo = read(fd, buffer, size);
-    buffer[size] = '\0';
-    if (fo == -1 || my_strlen(buffer) == 0)
-        return 84;
-    free(buffer);
-    close(fd);
-    return 0;
-}
-
-int main(int ac, char **av)
+int main(int ac, char **av, char **env)
 {
     if (ac == 2) {
         if (my_strcmp(av[1], "-h") == 0) {
             print_help();
             return 0;
         }
+        if (is_tty(env))
+            return 84;
+        if (verif_assets() == 84)
+            return 84;
         if (check_file(av) == 84)
             return 84;
         if (render_window(av) == 84)
