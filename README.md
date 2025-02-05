@@ -57,7 +57,7 @@ And these CSFML lib functions:
     - disable sprite (s)
     - disable hitbox (l)
 
-## Installatio
+## Installation
 To install the project, clone the repository and use the Makefile to build the project :
 
     > git clone https://github.com/ThePepidev/My_Radar.git
